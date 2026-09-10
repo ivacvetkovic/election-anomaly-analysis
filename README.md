@@ -77,7 +77,7 @@ Open `Election_Anomaly_Analysis.ipynb` in Jupyter Notebook or Google Colab.
 3. Select either the real or synthetic dataset.
 4. Run the remaining cells in order.
 
-## Web Demo
+## Viewing The Web Demo
 
 The browser-based visualization is contained in:
 
@@ -85,7 +85,7 @@ The browser-based visualization is contained in:
 - `style.css`
 - `app.js`
 
-Open `index.html` locally in a browser to view the interactive walkthrough.
+Download them, keep them in the same folder, and simply open 'index.html' in a web browser.
 
 ## Data Sources
 
