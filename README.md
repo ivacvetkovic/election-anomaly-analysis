@@ -1,48 +1,93 @@
 # Election Anomaly Analysis
 
-## Description
-Election Anomaly Analysis is a static, interactive web application that presents a step-by-step walkthrough of election-related data in two modes:
+## Overview
 
-1. A real New Jersey public dataset from the 2020 general election  
-2. A synthetic demonstration dataset designed to showcase additional analytical techniques  
+Election Anomaly Analysis is a data-analysis and visualization project exploring how statistical and introductory cybersecurity methods can be used to identify unusual patterns in election data.
 
-The application opens with a dataset selection screen and then guides the user through a short loading sequence before presenting the analysis.
+The project contains two components:
 
-During loading, a progress bar and console-style scan lines simulate the process of reading and preparing data. In real-data mode, these scan lines are derived from actual fields in the public precinct dataset (county, party label, vote count, and precinct name), reinforcing the connection between the interface and the underlying data.
+- **Python analysis notebook** — performs data cleaning, anomaly detection, statistical testing, risk scoring, visualization, and synthetic tampering simulation.
+- **Interactive web interface** — presents selected results through a static HTML/CSS/JavaScript walkthrough with animated charts and explanations.
 
-After loading, the user advances through a sequence of pages. Each page presents an animated bar chart, in which values grow into place, along with a concise explanation describing what is being shown and why it matters. The goal is to present the analysis as usable software rather than a static report.
+Two dataset modes are supported:
 
-## What the Real NJ Mode Shows (2020 General Election)
+1. A real New Jersey dataset from the 2020 general election
+2. A synthetic precinct-level dataset designed to demonstrate methods that require more complete data
 
-- **County turnout**  
-  Top ten New Jersey counties by turnout rate, calculated as ballots cast divided by registered voters using the official county-level turnout report.
+Statistical anomalies are treated as indicators for further investigation, not as evidence of fraud.
 
-- **County vote totals (two-party view)**  
-  Top ten counties by total vote count, aggregated from precinct-level returns and limited to Democratic and Republican votes for consistency.
+## Analysis Methods
 
-- **Ballot rejection rate**  
-  Top ten counties by the proportion of rejected ballots relative to ballots cast. This metric is included as an administrative quality signal, not evidence of fraud.
+The Python notebook includes:
 
-## What the Synthetic Mode Shows (Feature Showcase)
+- Data cleaning and standardization with Pandas
+- Turnout and vote-pattern analysis
+- Local Outlier Factor (LOF) anomaly detection
+- Benford's Law analysis where applicable
+- Last-digit irregularity testing
+- County-level risk scoring using multiple indicators
+- Synthetic tampering simulation
+- Precision and recall evaluation
+- Data visualization with Matplotlib
 
-Synthetic mode is explicitly labeled as a demonstration and does not represent real election results. It exists to illustrate analysis techniques that require controlled conditions or complete precinct-level data.
+## Technologies
 
-- **Synthetic county turnout**  
-  Turnout rates generated to mirror realistic variation across counties.
+**Analysis:** Python, Pandas, NumPy, SciPy, scikit-learn, Matplotlib  
+**Web:** HTML, CSS, JavaScript  
+**Environment:** Jupyter / Google Colab
 
-- **Benford’s Law distribution**  
-  Leading-digit frequencies computed from synthetic precinct vote totals.
+## Real NJ Dataset Mode
 
-- **Flagged precincts (LOF)**  
-  A Local Outlier Factor (LOF) score highlights unusually patterned precincts using turnout rate, vote share, and total votes (scaled). These results are presented as prompts for further human review.
+The real-data mode uses precinct-level vote returns together with county-level registered-voter information.
 
-## Key Design Choice: Benford’s Law Disabled for Real Data
+Because the available registration data is county-level, analyses requiring precinct-level registered-voter counts are limited or disabled in this mode.
 
-Benford-style tests require precinct-level vote totals in a consistent and complete format. In this project, public data availability and formatting do not support a reliable end-to-end Benford analysis within an easy-to-run application.
+The web interface presents:
 
-Rather than include a potentially misleading visualization, Benford’s Law is disabled in real-data mode and included only in synthetic mode to demonstrate how the technique works when appropriate data conditions are met.
+- County turnout
+- County vote totals
+- Ballot rejection rates
+- County-level anomaly patterns
 
-## Data Sources (Real Mode)
+## Synthetic Dataset Mode
+
+The synthetic dataset provides complete precinct-level fields so the full analysis pipeline can be demonstrated.
+
+It supports:
+
+- Precinct-level turnout analysis
+- Local Outlier Factor anomaly detection
+- Benford's Law analysis
+- Last-digit testing
+- County-level risk scoring
+- Tampering simulation and precision/recall evaluation
+
+## Important Methodological Note
+
+The project is an introductory demonstration of statistical anomaly detection and cybersecurity-oriented risk analysis.
+
+A statistical anomaly does **not** establish that manipulation or fraud occurred. Results are intended to identify unusual patterns that could warrant additional investigation.
+
+## Running the Analysis
+
+Open `Election_Anomaly_Analysis.ipynb` in Jupyter Notebook or Google Colab.
+
+1. Upload the required real-data CSV files if using Real NJ mode.
+2. Run the installation/import cell.
+3. Select either the real or synthetic dataset.
+4. Run the remaining cells in order.
+
+## Web Demo
+
+The browser-based visualization is contained in:
+
+- `index.html`
+- `style.css`
+- `app.js`
+
+Open `index.html` locally in a browser to view the interactive walkthrough.
+
+## Data Sources
 
 - MIT Election Data and Science Lab (2022).  
   *U.S. President Precinct-Level Returns 2020* (Harvard Dataverse, V4).  
@@ -51,20 +96,6 @@ Rather than include a potentially misleading visualization, Benford’s Law is d
 - New Jersey Division of Elections (2020).  
   *Official General Election Voter Turnout (County-level).*  
   https://www.nj.gov/state/elections/assets/pdf/election-results/2020/2020-official-general-voter-turnout.pdf
-
-## How to Run
-
-1. Download or clone the project folder.
-2. Open **index.html** in any modern web browser.
-
-## Files
-
-- **index.html** — Page structure and layout  
-- **style.css** — Visual styling, layout, and animations  
-- **app.js** — Application logic, embedded data, and UI rendering
-
-## Limitations and Future Improvements
-
 This project is intentionally scoped as an introductory analytical walkthrough rather than a full election auditing system.
 
 To ensure accessibility and ease of use, the application relies on precomputed summary values instead of accepting user-uploaded datasets. Future improvements could include dynamic CSV uploads, live recomputation of metrics, and additional statistical checks.
